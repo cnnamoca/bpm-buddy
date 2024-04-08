@@ -11,7 +11,7 @@ import SwiftUI
 struct bpm_buddyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }
