@@ -53,7 +53,7 @@ struct MainView: View {
         // Check if the last interval is too long; if so, start anew
         if tapTimes.count > 1 {
             let interval = now.timeIntervalSince(tapTimes[tapTimes.count - 2])
-            if interval > 2.0 {
+            if interval > 1.0 {
                 tapTimes = [tapTimes.last!]
             }
         }
