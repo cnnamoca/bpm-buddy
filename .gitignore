@@ -1,0 +1,3 @@
+# Ignore Xcode user-specific debugger data
+*.xcuserdatad/xcdebugger/
+
