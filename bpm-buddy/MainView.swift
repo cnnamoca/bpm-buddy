@@ -11,30 +11,37 @@ struct MainView: View {
     
     @State var bpm: Float = 0
     @State private var tapTimes: [Date] = []
+    @State private var tapLocation: CGPoint = .zero
+    @State private var circles: [AnimatingCircle] = []
     
     var body: some View {
         ZStack {
-            
             VStack {
                 Text("TAP")
                 Text(String(format: "%.1f BPM", bpm))
             }
             
-            // Full-screen transparent overlay that captures taps
             Color.clear
                 .contentShape(Rectangle())
                 .edgesIgnoringSafeArea(.all)
-                .gesture(tapGesture)
+                .onTapGesture {
+                    addCircle()
+                    calculateBPM()
+                }
             
+            ForEach(circles) { _ in
+                CircleView()
+            }
         }
     }
     
-    var tapGesture: some Gesture {
-        TapGesture()
-            .onEnded { _ in
-                print("Overlay tapped")
-                calculateBPM()
-            }
+    private func addCircle() {
+        let newCircle = AnimatingCircle()
+        circles.append(newCircle)
+        // Optionally, remove circle after animation if you don't want them to accumulate
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            circles.removeAll { $0.id == newCircle.id }
+        }
     }
     
     private func calculateBPM() {
@@ -64,6 +71,29 @@ struct MainView: View {
         generator.prepare()
         generator.impactOccurred()
     }
+}
+
+struct CircleView: View {
+    @State private var showCircle: Bool = true
+    @State private var circleScale: CGFloat = 0.0
+
+    var body: some View {
+        Circle()
+            .frame(width: 300, height: 300)
+            .foregroundColor(.pink)
+            .scaleEffect(circleScale)
+            .opacity(showCircle ? 0.4 : 0.0)
+            .onAppear {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    circleScale = 2.0
+                    showCircle = false
+                }
+            }
+    }
+}
+
+struct AnimatingCircle: Identifiable {
+    let id: UUID = UUID()
 }
 
 #Preview {
