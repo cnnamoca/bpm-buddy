@@ -11,11 +11,12 @@ struct CircleView: View {
 
     @State private var showCircle: Bool = true
     @State private var circleScale: CGFloat = 0.0
+    var color: Color
 
     var body: some View {
         Circle()
             .frame(width: 300, height: 300)
-            .foregroundColor(.pink)
+            .foregroundColor(color)
             .scaleEffect(circleScale)
             .opacity(showCircle ? 0.4 : 0.0)
             .onAppear {

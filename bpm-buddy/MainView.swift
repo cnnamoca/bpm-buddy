@@ -15,8 +15,8 @@ struct MainView: View {
     @State private var tapLocation: CGPoint = .zero
     @State private var circles: [AnimatingCircle] = []
     @State private var lastDragValue: CGFloat = 0
-    @State private var isMetronomeOn = false
     @StateObject private var metronomeManager = MetronomeManager(bpm: 120)
+    @AppStorage("theme") var theme: ColorTheme.RawValue = ColorTheme.piano.rawValue
     
     // Friction factor to control swipe sensitivity
     private let frictionFactor: CGFloat = 10.0
@@ -24,15 +24,22 @@ struct MainView: View {
     var body: some View {
         ZStack {
             
+            let currentTheme = ColorTheme(rawValue: theme) ?? .piano
+            
+            currentTheme.primaryColor
+                .ignoresSafeArea()
+            
             ForEach(circles) { _ in
-                CircleView()
+                CircleView(color: currentTheme.secondaryColor)
             }
             
             VStack {
                 Text(String(format: "%.1f", bpm))
                     .font(.system(size: 80, weight: .bold))
+                    .foregroundStyle(currentTheme.accentColor)
                 Text(String(format: "%.1f", lastBpm))
                     .font(.system(size: 40, weight: .medium))
+                    .foregroundStyle(currentTheme.accentColor)
             }
             
             Color.clear
@@ -60,25 +67,30 @@ struct MainView: View {
                         }
                     } label: {
                         Circle()
-                            .fill(metronomeManager.isRunning ? .pink : .gray)
+                            .fill(metronomeManager.isRunning ? currentTheme.secondaryColor : .gray)
                             .frame(height: 50)
                             .opacity(0.8)
                             .overlay(
                                 Image(systemName: "metronome.fill")
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(metronomeManager.isRunning ? currentTheme.accentColor : .white)
                                     .frame(height: 40)
                             )
                     }
                     
-                    UtilityButton(title: "1/2x") {
+                    UtilityButton(title: "1/2x",
+                                  bgColor: currentTheme.secondaryColor,
+                                  textColor: currentTheme.accentColor) {
                         bpm = bpm/2
                     }
                     
-                    UtilityButton(title: "2x") {
+                    UtilityButton(title: "2x",
+                                  bgColor: currentTheme.secondaryColor,
+                                  textColor: currentTheme.accentColor) {
                         bpm = bpm*2
                     }
                 }
             }
+            .padding(.horizontal)
         }
         
     }

@@ -10,6 +10,8 @@ import SwiftUI
 struct UtilityButton: View {
     
     var title: String
+    var bgColor: Color
+    var textColor: Color
     var action: () -> Void
     
     var body: some View {
@@ -17,13 +19,13 @@ struct UtilityButton: View {
             action()
         } label: {
             Circle()
-                .fill(.pink)
+                .fill(bgColor)
                 .frame(height: 50)
                 .opacity(0.8)
                 .overlay(
                     Text(title)
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(.white)
+                        .font(.system(size: 14, weight: .heavy))
+                        .foregroundStyle(textColor)
                 )
             
         }
