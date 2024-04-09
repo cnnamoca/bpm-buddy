@@ -6,14 +6,24 @@
 //
 
 import Foundation
+import AVFoundation
 
 class MetronomeManager: ObservableObject {
     private var timer: Timer?
     private var bpm: Double
+    private var player: AVAudioPlayer?
     @Published var isRunning = false
 
     init(bpm: Double) {
         self.bpm = bpm
+        
+        guard let url = Bundle.main.url(forResource: "metronome", withExtension: "wav") else { return }
+        do {
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            player?.prepareToPlay()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 
     func toggleMetronome() {
@@ -36,15 +46,16 @@ class MetronomeManager: ObservableObject {
     }
 
     private func stopMetronome() {
+        player?.stop()
         timer?.invalidate()
         timer = nil
         isRunning = false
     }
 
     private func tick() {
-        // This method gets called on each metronome tick.
-        // Use it to update UI or play a sound.
         print("Metronome Tick - BPM: \(bpm)")
+        player?.currentTime = 0
+        player?.play()
     }
 
     // Adjust BPM and restart metronome if it's running

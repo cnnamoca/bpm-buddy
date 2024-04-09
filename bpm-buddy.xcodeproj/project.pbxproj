@@ -19,6 +19,7 @@
 		17F4327D2BC5A177009DF779 /* UtilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F4327C2BC5A177009DF779 /* UtilityButton.swift */; };
 		17F4327F2BC5A460009DF779 /* MetronomeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F4327E2BC5A460009DF779 /* MetronomeManager.swift */; };
 		17F432812BC5AC9F009DF779 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F432802BC5AC9F009DF779 /* ColorTheme.swift */; };
+		17F432852BC5FC16009DF779 /* metronome.wav in Resources */ = {isa = PBXBuildFile; fileRef = 17F432842BC5FC16009DF779 /* metronome.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		17F4327C2BC5A177009DF779 /* UtilityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityButton.swift; sourceTree = "<group>"; };
 		17F4327E2BC5A460009DF779 /* MetronomeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeManager.swift; sourceTree = "<group>"; };
 		17F432802BC5AC9F009DF779 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		17F432842BC5FC16009DF779 /* metronome.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = metronome.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				17F4327E2BC5A460009DF779 /* MetronomeManager.swift */,
 				17F4327C2BC5A177009DF779 /* UtilityButton.swift */,
 				17449E1E2BC444C0003D957C /* Assets.xcassets */,
+				17F432842BC5FC16009DF779 /* metronome.wav */,
 				17449E202BC444C0003D957C /* Preview Content */,
 				17F432802BC5AC9F009DF779 /* ColorTheme.swift */,
 			);
@@ -246,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17F432852BC5FC16009DF779 /* metronome.wav in Resources */,
 				17449E222BC444C0003D957C /* Preview Assets.xcassets in Resources */,
 				17449E1F2BC444C0003D957C /* Assets.xcassets in Resources */,
 			);

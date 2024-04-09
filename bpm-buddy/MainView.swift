@@ -141,6 +141,11 @@ struct MainView: View {
             let intervals = zip(tapTimes, tapTimes.dropFirst()).map { $1.timeIntervalSince($0) }
             if let averageInterval = intervals.dropFirst().reduce(0, +) / Double(intervals.count - 1) as Double? {
                 bpm = Float(60.0 / averageInterval)
+                
+                // Reset metronome
+                if metronomeManager.isRunning {
+                    metronomeManager.toggleMetronome()
+                }
             }
         }
         
