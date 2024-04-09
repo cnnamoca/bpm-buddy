@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct CircleView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
 
-#Preview {
-    CircleView()
+    @State private var showCircle: Bool = true
+    @State private var circleScale: CGFloat = 0.0
+
+    var body: some View {
+        Circle()
+            .frame(width: 300, height: 300)
+            .foregroundColor(.pink)
+            .scaleEffect(circleScale)
+            .opacity(showCircle ? 0.4 : 0.0)
+            .onAppear {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    circleScale = 2.0
+                    showCircle = false
+                }
+            }
+    }
 }

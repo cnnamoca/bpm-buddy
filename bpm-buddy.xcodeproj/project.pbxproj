@@ -14,6 +14,8 @@
 		17449E2C2BC444C0003D957C /* bpm_buddyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17449E2B2BC444C0003D957C /* bpm_buddyTests.swift */; };
 		17449E362BC444C0003D957C /* bpm_buddyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17449E352BC444C0003D957C /* bpm_buddyUITests.swift */; };
 		17449E382BC444C0003D957C /* bpm_buddyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17449E372BC444C0003D957C /* bpm_buddyUITestsLaunchTests.swift */; };
+		17C51EAD2BC58D8000B17570 /* AnimatingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C51EAC2BC58D8000B17570 /* AnimatingCircle.swift */; };
+		17C51EAF2BC58D9200B17570 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C51EAE2BC58D9200B17570 /* CircleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		17449E312BC444C0003D957C /* bpm-buddyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "bpm-buddyUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17449E352BC444C0003D957C /* bpm_buddyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bpm_buddyUITests.swift; sourceTree = "<group>"; };
 		17449E372BC444C0003D957C /* bpm_buddyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bpm_buddyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		17C51EAC2BC58D8000B17570 /* AnimatingCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingCircle.swift; sourceTree = "<group>"; };
+		17C51EAE2BC58D9200B17570 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,8 @@
 			children = (
 				17449E1A2BC444BD003D957C /* bpm_buddyApp.swift */,
 				17449E1C2BC444BD003D957C /* MainView.swift */,
+				17C51EAC2BC58D8000B17570 /* AnimatingCircle.swift */,
+				17C51EAE2BC58D9200B17570 /* CircleView.swift */,
 				17449E1E2BC444C0003D957C /* Assets.xcassets */,
 				17449E202BC444C0003D957C /* Preview Content */,
 			);
@@ -257,6 +263,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C51EAF2BC58D9200B17570 /* CircleView.swift in Sources */,
+				17C51EAD2BC58D8000B17570 /* AnimatingCircle.swift in Sources */,
 				17449E1D2BC444BD003D957C /* MainView.swift in Sources */,
 				17449E1B2BC444BD003D957C /* bpm_buddyApp.swift in Sources */,
 			);

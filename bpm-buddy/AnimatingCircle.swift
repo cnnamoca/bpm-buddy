@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-struct AnimatingCircle: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    AnimatingCircle()
+struct AnimatingCircle: Identifiable {
+    let id: UUID = UUID()
 }
