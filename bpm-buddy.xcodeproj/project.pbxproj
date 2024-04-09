@@ -16,6 +16,9 @@
 		17449E382BC444C0003D957C /* bpm_buddyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17449E372BC444C0003D957C /* bpm_buddyUITestsLaunchTests.swift */; };
 		17C51EAD2BC58D8000B17570 /* AnimatingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C51EAC2BC58D8000B17570 /* AnimatingCircle.swift */; };
 		17C51EAF2BC58D9200B17570 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C51EAE2BC58D9200B17570 /* CircleView.swift */; };
+		17F4327D2BC5A177009DF779 /* UtilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F4327C2BC5A177009DF779 /* UtilityButton.swift */; };
+		17F4327F2BC5A460009DF779 /* MetronomeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F4327E2BC5A460009DF779 /* MetronomeManager.swift */; };
+		17F432812BC5AC9F009DF779 /* ColourTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F432802BC5AC9F009DF779 /* ColourTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,9 @@
 		17449E372BC444C0003D957C /* bpm_buddyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bpm_buddyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		17C51EAC2BC58D8000B17570 /* AnimatingCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingCircle.swift; sourceTree = "<group>"; };
 		17C51EAE2BC58D9200B17570 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		17F4327C2BC5A177009DF779 /* UtilityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityButton.swift; sourceTree = "<group>"; };
+		17F4327E2BC5A460009DF779 /* MetronomeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeManager.swift; sourceTree = "<group>"; };
+		17F432802BC5AC9F009DF779 /* ColourTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourTheme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,12 +104,15 @@
 		17449E192BC444BD003D957C /* bpm-buddy */ = {
 			isa = PBXGroup;
 			children = (
-				17449E1A2BC444BD003D957C /* bpm_buddyApp.swift */,
-				17449E1C2BC444BD003D957C /* MainView.swift */,
 				17C51EAC2BC58D8000B17570 /* AnimatingCircle.swift */,
+				17449E1A2BC444BD003D957C /* bpm_buddyApp.swift */,
 				17C51EAE2BC58D9200B17570 /* CircleView.swift */,
+				17449E1C2BC444BD003D957C /* MainView.swift */,
+				17F4327E2BC5A460009DF779 /* MetronomeManager.swift */,
+				17F4327C2BC5A177009DF779 /* UtilityButton.swift */,
 				17449E1E2BC444C0003D957C /* Assets.xcassets */,
 				17449E202BC444C0003D957C /* Preview Content */,
+				17F432802BC5AC9F009DF779 /* ColourTheme.swift */,
 			);
 			path = "bpm-buddy";
 			sourceTree = "<group>";
@@ -265,7 +274,10 @@
 			files = (
 				17C51EAF2BC58D9200B17570 /* CircleView.swift in Sources */,
 				17C51EAD2BC58D8000B17570 /* AnimatingCircle.swift in Sources */,
+				17F4327D2BC5A177009DF779 /* UtilityButton.swift in Sources */,
 				17449E1D2BC444BD003D957C /* MainView.swift in Sources */,
+				17F432812BC5AC9F009DF779 /* ColourTheme.swift in Sources */,
+				17F4327F2BC5A460009DF779 /* MetronomeManager.swift in Sources */,
 				17449E1B2BC444BD003D957C /* bpm_buddyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct UtilityButton: View {
+    
+    var title: String
+    var action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            action()
+        } label: {
+            Circle()
+                .fill(.pink)
+                .frame(height: 50)
+                .opacity(0.8)
+                .overlay(
+                    Text(title)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(.white)
+                )
+            
+        }
     }
-}
-
-#Preview {
-    UtilityButton()
 }

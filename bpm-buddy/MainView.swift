@@ -15,6 +15,8 @@ struct MainView: View {
     @State private var tapLocation: CGPoint = .zero
     @State private var circles: [AnimatingCircle] = []
     @State private var lastDragValue: CGFloat = 0
+    @State private var isMetronomeOn = false
+    @StateObject private var metronomeManager = MetronomeManager(bpm: 120)
     
     // Friction factor to control swipe sensitivity
     private let frictionFactor: CGFloat = 10.0
@@ -48,6 +50,26 @@ struct MainView: View {
                     
                     Spacer()
                     
+                    Button {
+                        if metronomeManager.isRunning {
+                            // If the metronome is currently running, stop it.
+                            metronomeManager.toggleMetronome()
+                        } else {
+                            // If the metronome is not running, adjust BPM (if needed) and start it.
+                            metronomeManager.adjustBPM(to: Double(bpm))
+                        }
+                    } label: {
+                        Circle()
+                            .fill(metronomeManager.isRunning ? .pink : .gray)
+                            .frame(height: 50)
+                            .opacity(0.8)
+                            .overlay(
+                                Image(systemName: "metronome.fill")
+                                    .foregroundStyle(.white)
+                                    .frame(height: 40)
+                            )
+                    }
+                    
                     UtilityButton(title: "1/2x") {
                         bpm = bpm/2
                     }
@@ -75,29 +97,6 @@ struct MainView: View {
             .onEnded { _ in
                 lastDragValue = 0 // Reset the drag value after the gesture ends
             }
-    }
-    
-    private struct UtilityButton: View {
-        
-        var title: String
-        var action: () -> Void
-        
-        var body: some View {
-            Button {
-                action()
-            } label: {
-                Circle()
-                    .fill(.pink)
-                    .frame(height: 50)
-                    .opacity(0.8)
-                    .overlay(
-                        Text(title)
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundStyle(.white)
-                    )
-                
-            }
-        }
     }
     
     // MARK: - Private functions
