@@ -9,12 +9,13 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State var bpm: Float = 0
-    @State var lastBpm: Float = 0
+    @State private var bpm: Float = 0
+    @State private var lastBpm: Float = 0
     @State private var tapTimes: [Date] = []
     @State private var tapLocation: CGPoint = .zero
     @State private var circles: [AnimatingCircle] = []
     @State private var lastDragValue: CGFloat = 0
+    @State private var isLocked: Bool = false
     @StateObject private var metronomeManager = MetronomeManager(bpm: 120)
     @AppStorage("theme") var theme: ColorTheme.RawValue = ColorTheme.piano.rawValue
     
@@ -57,7 +58,21 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    Button {
+                    UtilityButton(bgColor: currentTheme.secondaryColor) {
+                        isLocked.toggle()
+                    } content: {
+                        Circle()
+                            .fill(isLocked ? currentTheme.secondaryColor : .gray)
+                            .frame(height: 50)
+                            .opacity(0.8)
+                            .overlay(
+                                Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
+                                    .foregroundStyle(isLocked ? currentTheme.accentColor : .white)
+                                    .frame(height: 40)
+                            )
+                    }
+                    
+                    UtilityButton(bgColor: currentTheme.secondaryColor) {
                         if metronomeManager.isRunning {
                             // If the metronome is currently running, stop it.
                             metronomeManager.toggleMetronome()
@@ -65,7 +80,7 @@ struct MainView: View {
                             // If the metronome is not running, adjust BPM (if needed) and start it.
                             metronomeManager.adjustBPM(to: Double(bpm))
                         }
-                    } label: {
+                    } content: {
                         Circle()
                             .fill(metronomeManager.isRunning ? currentTheme.secondaryColor : .gray)
                             .frame(height: 50)
@@ -77,16 +92,20 @@ struct MainView: View {
                             )
                     }
                     
-                    UtilityButton(title: "1/2x",
-                                  bgColor: currentTheme.secondaryColor,
-                                  textColor: currentTheme.accentColor) {
-                        bpm = bpm/2
+                    UtilityButton(bgColor: currentTheme.secondaryColor) {
+                        adjustBPM(by: 0.5)
+                    } content: {
+                        Text("1/2x")
+                            .font(.system(size: 14, weight: .heavy))
+                            .foregroundStyle(currentTheme.accentColor)
                     }
                     
-                    UtilityButton(title: "2x",
-                                  bgColor: currentTheme.secondaryColor,
-                                  textColor: currentTheme.accentColor) {
-                        bpm = bpm*2
+                    UtilityButton(bgColor: currentTheme.secondaryColor) {
+                        adjustBPM(by: 2)
+                    } content: {
+                        Text("2x")
+                            .font(.system(size: 14, weight: .heavy))
+                            .foregroundStyle(currentTheme.accentColor)
                     }
                 }
             }
@@ -104,7 +123,6 @@ struct MainView: View {
                     lastDragValue = value.translation.height
                     triggerHaptics()
                 }
-                
             }
             .onEnded { _ in
                 lastDragValue = 0 // Reset the drag value after the gesture ends
@@ -112,6 +130,11 @@ struct MainView: View {
     }
     
     // MARK: - Private functions
+    private func adjustBPM(by factor: Float) {
+        if metronomeManager.isRunning { metronomeManager.toggleMetronome() }
+        bpm *= factor
+    }
+    
     private func addCircle() {
         let newCircle = AnimatingCircle()
         circles.append(newCircle)
@@ -131,7 +154,10 @@ struct MainView: View {
         if tapTimes.count > 1 {
             let interval = now.timeIntervalSince(tapTimes[tapTimes.count - 2])
             if interval > 2 {
-                lastBpm = bpm
+                
+                // Lock mechanism for temporarily saving previous bpm
+                if !isLocked { lastBpm = bpm }
+                
                 tapTimes = [tapTimes.last!]
             }
         }
