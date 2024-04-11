@@ -26,8 +26,10 @@ struct MainView: View {
     @AppStorage("doubleButton") var doubleButton: Bool = true
     @AppStorage("theme") var selectedTheme: ColorTheme.RawValue = ColorTheme.basic.rawValue
     
-    // Friction factor to control swipe sensitivity
-    private let frictionFactor: CGFloat = 10.0
+    
+    private let frictionFactor: CGFloat = 10.0 // Friction factor to control swipe sensitivity
+    private let minBPM: Float = 0
+    private let maxBPM: Float = 999
     
     var body: some View {
         ZStack {
@@ -162,7 +164,8 @@ struct MainView: View {
             .onChanged { value in
                 let dragDifference = (lastDragValue - value.translation.height) / frictionFactor
                 if abs(dragDifference) > 1 { // Adjust this threshold as needed
-                    bpm += Float(dragDifference) * 0.1 // Adjust BPM based on scaled drag difference
+                    let newBPM = bpm + Float(dragDifference) * 0.1 // Calculate new BPM based on drag
+                    bpm = min(max(newBPM, minBPM), maxBPM)
                     lastDragValue = value.translation.height
                     triggerHaptics()
                 }
@@ -209,7 +212,8 @@ struct MainView: View {
         if tapTimes.count >= 3 {
             let intervals = zip(tapTimes, tapTimes.dropFirst()).map { $1.timeIntervalSince($0) }
             if let averageInterval = intervals.dropFirst().reduce(0, +) / Double(intervals.count - 1) as Double? {
-                bpm = Float(60.0 / averageInterval)
+                let newBPM = Float(60.0 / averageInterval)
+                bpm = min(max(newBPM, minBPM), maxBPM)
                 
                 // Reset metronome
                 if metronomeManager.isRunning {
