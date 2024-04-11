@@ -16,6 +16,7 @@ struct MainView: View {
     @State private var circles: [AnimatingCircle] = []
     @State private var lastDragValue: CGFloat = 0
     @State private var isLocked: Bool = false
+    @State private var showSettings: Bool = false
     @StateObject private var metronomeManager = MetronomeManager(bpm: 120)
     @AppStorage("theme") var theme: ColorTheme.RawValue = ColorTheme.piano.rawValue
     
@@ -52,11 +53,31 @@ struct MainView: View {
                 }
                 .gesture(swipeGesture)
             
-            HStack {
-                Spacer()
-                VStack(spacing: 16) {
+            // Side Buttons
+            VStack {
+                
+                HStack {
                     
                     Spacer()
+                    
+                    UtilityButton(bgColor: .clear) {
+                        showSettings.toggle()
+                    } content: {
+                        Circle()
+                            .fill(.clear)
+                            .frame(height: 50)
+                            .overlay(
+                                Image(systemName: "gearshape.fill")
+                                    .foregroundStyle(currentTheme.accentColor)
+                                    .frame(height: 40)
+                            )
+                    }
+                }
+                
+                
+                Spacer()
+                
+                HStack(spacing: 16) {
                     
                     UtilityButton(bgColor: currentTheme.secondaryColor) {
                         isLocked.toggle()
@@ -64,7 +85,6 @@ struct MainView: View {
                         Circle()
                             .fill(isLocked ? currentTheme.secondaryColor : .gray)
                             .frame(height: 50)
-                            .opacity(0.8)
                             .overlay(
                                 Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
                                     .foregroundStyle(isLocked ? currentTheme.accentColor : .white)
@@ -84,7 +104,6 @@ struct MainView: View {
                         Circle()
                             .fill(metronomeManager.isRunning ? currentTheme.secondaryColor : .gray)
                             .frame(height: 50)
-                            .opacity(0.8)
                             .overlay(
                                 Image(systemName: "metronome.fill")
                                     .foregroundStyle(metronomeManager.isRunning ? currentTheme.accentColor : .white)
@@ -109,8 +128,11 @@ struct MainView: View {
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding()
         }
+        .sheet(isPresented: $showSettings, content: {
+            SettingsView()
+        })
         
     }
     
