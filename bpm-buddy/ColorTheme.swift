@@ -9,14 +9,16 @@ import Foundation
 import SwiftUI
 
 enum ColorTheme: String, CaseIterable {
+    case basic
     case grass
     case sakura
     case utility
     case egg
-    case piano
 
     var primaryColor: Color {
         switch self {
+        case .basic:
+            return Color(hex: "#DCDCDD")
         case .grass:
             return Color(hex: "#DDE392")
         case .sakura:
@@ -25,13 +27,13 @@ enum ColorTheme: String, CaseIterable {
             return Color(hex: "#7E8287")
         case .egg:
             return Color(hex: "#423E37")
-        case .piano:
-            return Color(hex: "#DCDCDD")
         }
     }
 
     var secondaryColor: Color {
         switch self {
+        case .basic:
+            return Color(hex: "#C5C3C6")
         case .grass:
             return Color(hex: "#AFBE8F")
         case .sakura:
@@ -40,13 +42,13 @@ enum ColorTheme: String, CaseIterable {
             return Color(hex: "#F86624")
         case .egg:
             return Color(hex: "#E3B23C")
-        case .piano:
-            return Color(hex: "#C5C3C6")
         }
     }
 
     var accentColor: Color {
         switch self {
+        case .basic:
+            return Color(hex: "#46494C")
         case .grass:
             return Color(hex: "#7D8570")
         case .sakura:
@@ -55,8 +57,6 @@ enum ColorTheme: String, CaseIterable {
             return Color(hex: "#272932")
         case .egg:
             return Color(hex: "#EDEBD7")
-        case .piano:
-            return Color(hex: "#46494C")
         }
     }
 }

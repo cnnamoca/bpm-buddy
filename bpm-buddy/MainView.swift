@@ -17,8 +17,14 @@ struct MainView: View {
     @State private var lastDragValue: CGFloat = 0
     @State private var isLocked: Bool = false
     @State private var showSettings: Bool = false
+    
     @StateObject private var metronomeManager = MetronomeManager(bpm: 120)
-    @AppStorage("theme") var theme: ColorTheme.RawValue = ColorTheme.piano.rawValue
+    
+    @AppStorage("lockButton") var lockButton: Bool = true
+    @AppStorage("metronomeButton") var metronomeButton: Bool = true
+    @AppStorage("halfButton") var halfButton: Bool = true
+    @AppStorage("doubleButton") var doubleButton: Bool = true
+    @AppStorage("theme") var selectedTheme: ColorTheme.RawValue = ColorTheme.basic.rawValue
     
     // Friction factor to control swipe sensitivity
     private let frictionFactor: CGFloat = 10.0
@@ -26,7 +32,7 @@ struct MainView: View {
     var body: some View {
         ZStack {
             
-            let currentTheme = ColorTheme(rawValue: theme) ?? .piano
+            let currentTheme = ColorTheme(rawValue: selectedTheme) ?? .basic
             
             currentTheme.primaryColor
                 .ignoresSafeArea()
@@ -61,6 +67,12 @@ struct MainView: View {
                     Spacer()
                     
                     UtilityButton(bgColor: .clear) {
+                        // Make sure these buttons are off
+                        isLocked = false
+                        if metronomeManager.isRunning {
+                            metronomeManager.toggleMetronome()
+                        }
+                        // Toggle settings view
                         showSettings.toggle()
                     } content: {
                         Circle()
@@ -79,59 +91,68 @@ struct MainView: View {
                 
                 HStack(spacing: 16) {
                     
-                    UtilityButton(bgColor: currentTheme.secondaryColor) {
-                        isLocked.toggle()
-                    } content: {
-                        Circle()
-                            .fill(isLocked ? currentTheme.secondaryColor : .gray)
-                            .frame(height: 50)
-                            .overlay(
-                                Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
-                                    .foregroundStyle(isLocked ? currentTheme.accentColor : .white)
-                                    .frame(height: 40)
-                            )
-                    }
-                    
-                    UtilityButton(bgColor: currentTheme.secondaryColor) {
-                        if metronomeManager.isRunning {
-                            // If the metronome is currently running, stop it.
-                            metronomeManager.toggleMetronome()
-                        } else {
-                            // If the metronome is not running, adjust BPM (if needed) and start it.
-                            metronomeManager.adjustBPM(to: Double(bpm))
+                    if lockButton {
+                        UtilityButton(bgColor: currentTheme.secondaryColor) {
+                            isLocked.toggle()
+                        } content: {
+                            Circle()
+                                .fill(isLocked ? currentTheme.secondaryColor : .gray)
+                                .frame(height: 50)
+                                .overlay(
+                                    Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
+                                        .foregroundStyle(isLocked ? currentTheme.accentColor : .white)
+                                        .frame(height: 40)
+                                )
                         }
-                    } content: {
-                        Circle()
-                            .fill(metronomeManager.isRunning ? currentTheme.secondaryColor : .gray)
-                            .frame(height: 50)
-                            .overlay(
-                                Image(systemName: "metronome.fill")
-                                    .foregroundStyle(metronomeManager.isRunning ? currentTheme.accentColor : .white)
-                                    .frame(height: 40)
-                            )
                     }
                     
-                    UtilityButton(bgColor: currentTheme.secondaryColor) {
-                        adjustBPM(by: 0.5)
-                    } content: {
-                        Text("1/2x")
-                            .font(.system(size: 14, weight: .heavy))
-                            .foregroundStyle(currentTheme.accentColor)
+                    if metronomeButton {
+                        UtilityButton(bgColor: currentTheme.secondaryColor) {
+                            if metronomeManager.isRunning {
+                                // If the metronome is currently running, stop it.
+                                metronomeManager.toggleMetronome()
+                            } else {
+                                // If the metronome is not running, adjust BPM (if needed) and start it.
+                                metronomeManager.adjustBPM(to: Double(bpm))
+                            }
+                        } content: {
+                            Circle()
+                                .fill(metronomeManager.isRunning ? currentTheme.secondaryColor : .gray)
+                                .frame(height: 50)
+                                .overlay(
+                                    Image(systemName: "metronome.fill")
+                                        .foregroundStyle(metronomeManager.isRunning ? currentTheme.accentColor : .white)
+                                        .frame(height: 40)
+                                )
+                        }
                     }
                     
-                    UtilityButton(bgColor: currentTheme.secondaryColor) {
-                        adjustBPM(by: 2)
-                    } content: {
-                        Text("2x")
-                            .font(.system(size: 14, weight: .heavy))
-                            .foregroundStyle(currentTheme.accentColor)
+                    if halfButton {
+                        UtilityButton(bgColor: currentTheme.secondaryColor) {
+                            adjustBPM(by: 0.5)
+                        } content: {
+                            Text("1/2x")
+                                .font(.system(size: 14, weight: .heavy))
+                                .foregroundStyle(currentTheme.accentColor)
+                        }
                     }
+                    
+                    if doubleButton {
+                        UtilityButton(bgColor: currentTheme.secondaryColor) {
+                            adjustBPM(by: 2)
+                        } content: {
+                            Text("2x")
+                                .font(.system(size: 14, weight: .heavy))
+                                .foregroundStyle(currentTheme.accentColor)
+                        }
+                    }
+                    
                 }
             }
             .padding()
         }
         .sheet(isPresented: $showSettings, content: {
-            SettingsView()
+            SettingsView(showSettings: $showSettings)
         })
         
     }
